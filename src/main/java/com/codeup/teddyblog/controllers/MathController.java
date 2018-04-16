@@ -33,6 +33,11 @@ public class MathController {
     @ResponseBody
     public String divide(@PathVariable float num1, @PathVariable float num2) {
         float quotient = num1 / num2;
-        return "The quotient of " + num1 + " and " + num2 + " is " + quotient + ".";
+        if (num2 == 0){
+            return "Can not divide by 0!";
+        }
+        else {
+            return "The quotient of " + num1 + " and " + num2 + " is " + quotient + ".";
+        }
     }
 }
