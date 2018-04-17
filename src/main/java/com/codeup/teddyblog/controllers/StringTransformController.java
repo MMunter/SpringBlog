@@ -29,7 +29,16 @@ public class StringTransformController {
     @GetMapping("/string/both/{string}")
     @ResponseBody
     public String ReverseAndAllCaps(@PathVariable String string) {
-        return string.reverseString
+        StringBuilder string2 = new StringBuilder();
+
+        string2.append(string);
+        string2 = string2.reverse();
+        String newString = string2.toString();
+        newString = newString.toUpperCase();
+        return newString;
+
+
+
     }
 
 }
