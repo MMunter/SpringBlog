@@ -1,45 +1,60 @@
 package com.codeup.teddyblog.controllers;
 
 import com.codeup.teddyblog.Models.Post;
+import com.codeup.teddyblog.services.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
 public class PostController {
+
+    PostService postService;
+
+    public PostController (PostService postService) {
+       this.postService = postService;
+    }
+
     @GetMapping("/posts")
-    @ResponseBody
-    public String Index(){
-        return "This is the posts index page.";
+    public String index(Model model){
+
+        model.addAttribute("posts", postService.findAll());
+        return "/posts/index";
     }
 
     @GetMapping("/posts/{id}")
-    @ResponseBody
-    public String IdPost(@PathVariable long id, Model model){
-        return "This is the post page for ID#" + id + ".";
+    public String idPost(@PathVariable long id, Model model){
+       model.addAttribute("post", postService.getPost(id));
+       return "/posts/show";
 
     }
+
+    @GetMapping("/posts/{id}/edit")
+    public String editPost(@PathVariable long id, Model model){
+        idPost(id, model);
+        return "/posts/edit";
+    }
+
+
 
     @GetMapping("/posts/create")
-    @ResponseBody
-    public String CreatePostFrom (){
-        return "This is the form for creating a post.";
-//        Post post = new Post();
-//        post.getTitle();
-//        post.getBody();
-//        return
+    public String createPostForm (Model viewModel){
+       viewModel.addAttribute("newPost", new Post());
+       return "/posts/create";
+
     }
 
-    //tyt
-    //tyt
+
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String CreatePost(){
-        return "This creates the post.";
+    public String insert(@ModelAttribute Post newPost){
+        postService.save(newPost);
+        return "redirect:/posts";
     }
+
+
 }
