@@ -12,6 +12,8 @@
         <div th:each="post : ${posts}">
             <h3><span th:text="${post.title}"></span> </h3>
             <p><span th:text="${post.body}"></span> </p>
+            <a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit</a>
+
         </div>
     </main>
 
