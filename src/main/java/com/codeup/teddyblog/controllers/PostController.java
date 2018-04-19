@@ -45,6 +45,7 @@ public class PostController {
     public String handleEdit(@ModelAttribute Post post){
         postDao.save(post);
         return "redirect:/posts";
+
     }
 
     @GetMapping("/posts/create")
