@@ -26,10 +26,17 @@ public class User {
     }
 
     public User(long id, String username, String email, String password){
-        this.id = 1;
+        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public User(User copy){
+        this.id = copy.id;
+        this.username = copy.username;
+        this.email = copy.email;
+        this.password = copy.password;
     }
 
     public User(){}
