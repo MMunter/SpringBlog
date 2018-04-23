@@ -1,7 +1,9 @@
 package com.codeup.teddyblog.controllers;
 
 import com.codeup.teddyblog.Models.Post;
+import com.codeup.teddyblog.Models.User;
 import com.codeup.teddyblog.repositories.PostRepository;
+import com.codeup.teddyblog.repositories.UserRepository;
 import com.codeup.teddyblog.services.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +18,12 @@ public class PostController {
 
     PostService postService;
     PostRepository postDao;
+    UserRepository userDao;
 
-    public PostController (PostService postService, PostRepository postDao) {
+    public PostController (PostService postService, PostRepository postDao, UserRepository userDao) {
        this.postService = postService;
        this.postDao = postDao;
+       this.userDao = userDao;
     }
 
     @GetMapping("/posts")
@@ -31,8 +35,8 @@ public class PostController {
 
     @GetMapping("/posts/{id}")
     public String idPost(@PathVariable long id, Model model){
-       model.addAttribute("post", postDao.findOne(id));
-       return "/posts/show";
+        model.addAttribute("post", postDao.findOne(id));
+        return "/posts/show";
     }
 
     @GetMapping("/posts/{id}/edit")
@@ -56,6 +60,8 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String insert(@ModelAttribute Post newPost){
+        User user = userDao.findOne(1L);
+        newPost.setUser(user);
         postDao.save(newPost);
         return "redirect:/posts";
     }

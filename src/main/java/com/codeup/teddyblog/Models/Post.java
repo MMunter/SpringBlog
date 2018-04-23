@@ -1,6 +1,7 @@
 package com.codeup.teddyblog.Models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -12,20 +13,37 @@ public class Post {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String body;
+
+    //Create relationship to the users table
+    @OneToOne
+    private User user;
+
+//    @OneToOne
+//    private PostDetails postDetails;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="posts_categories",
+    joinColumns ={@JoinColumn(name="post_id")},
+    inverseJoinColumns = {@JoinColumn(name="category_id")}
+    )
+    private List<Categories> categories;
+
 
     public Post(){}
 
-    public Post(long id, String title, String body){
+    public Post(long id, String title, String body, User user){
         this.id = id;
         this.title = title;
         this.body = body;
+        this.user = user;
     }
 
-    public Post(String title, String body){
+    public Post(String title, String body, User user){
         this.title = title;
         this.body = body;
+        this.user = user;
     }
 
     public String getTitle() {
@@ -50,5 +68,21 @@ public class Post {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Categories> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Categories> categories) {
+        this.categories = categories;
     }
 }
