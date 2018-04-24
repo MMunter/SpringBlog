@@ -17,7 +17,7 @@ public class Post {
     private String body;
 
     //Create relationship to the users table
-    @OneToOne
+    @ManyToMany
     private User user;
 
 //    @OneToOne

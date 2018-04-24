@@ -29,23 +29,22 @@ public class PostController {
        this.userDao = userDao;
     }
 
-    @GetMapping("/")
+    @GetMapping("/posts")
     public String index(Model model){
-
         model.addAttribute("posts", postDao.findAll());
-        return "/posts/index";
+        return "posts/index";
     }
 
     @GetMapping("/posts/{id}")
     public String idPost(@PathVariable long id, Model model){
         model.addAttribute("post", postDao.findOne(id));
-        return "/posts/show";
+        return "posts/show";
     }
 
     @GetMapping("/posts/{id}/edit")
     public String editPost(@PathVariable long id, Model model){
         model.addAttribute("post", postDao.findById(id));
-        return "/posts/edit";
+        return "posts/edit";
     }
 
     @PostMapping("/posts/{id}/edit")
@@ -62,7 +61,8 @@ public class PostController {
     public String createPostForm (@Valid Post post, Errors errors, Model model){
         if(errors.hasErrors()) {
             model.addAttribute(post);
-            return "/posts/create";
+            System.out.println("There is an error.");
+            return "posts/create";
         }
         else{
             User loggedInUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
