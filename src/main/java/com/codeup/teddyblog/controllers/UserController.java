@@ -2,6 +2,7 @@ package com.codeup.teddyblog.controllers;
 
 import com.codeup.teddyblog.Models.User;
 import com.codeup.teddyblog.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +20,13 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @GetMapping("/sign-up")
+    @GetMapping("/register")
     public String showSignupForm(Model model){
         model.addAttribute("user", new User());
-        return "users/sign-up";
+        return "/users/register";
     }
 
-    @PostMapping("/sign-up")
+    @PostMapping("/register")
     public String saveUser(@ModelAttribute User user){
         String hash = passwordEncoder.encode(user.getPassword());
         user.setPassword(hash);
@@ -35,6 +36,12 @@ public class UserController {
 
     @GetMapping("/login")
     public String showLoginForm() {
-        return "users/login";
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser"){
+            return "redirect:/posts";
+        }
+        else{
+            return "/users/login";
+        }
     }
+
 }
