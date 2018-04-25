@@ -1,6 +1,7 @@
 package com.codeup.teddyblog.Models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -19,13 +20,16 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @OneToMany
+    private List<Post> posts;
+
     public User(String username, String email, String password){
         this.username = username;
         this.email = email;
         this.password = password;
     }
 
-    public User(long id, String username, String email, String password){
+    public User(long id, String username, String email, String password, List<Post> posts){
         this.id = id;
         this.username = username;
         this.email = email;
@@ -72,5 +76,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPost(List<Post> posts) {
+        this.posts = posts;
     }
 }

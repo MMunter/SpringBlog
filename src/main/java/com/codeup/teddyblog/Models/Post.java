@@ -1,5 +1,7 @@
 package com.codeup.teddyblog.Models;
 
+import org.hibernate.annotations.ManyToAny;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,7 +19,8 @@ public class Post {
     private String body;
 
     //Create relationship to the users table
-    @ManyToMany
+    @ManyToOne
+    @JoinColumn(name="user_id")
     private User user;
 
 //    @OneToOne

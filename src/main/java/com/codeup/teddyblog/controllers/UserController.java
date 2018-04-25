@@ -23,7 +23,7 @@ public class UserController {
     @GetMapping("/register")
     public String showSignupForm(Model model){
         model.addAttribute("user", new User());
-        return "/users/register";
+        return "users/register";
     }
 
     @PostMapping("/register")
@@ -36,7 +36,7 @@ public class UserController {
 
     @GetMapping("/login")
     public String showLoginForm() {
-        return "/users/login";
+        return "users/login";
     }
 
 
