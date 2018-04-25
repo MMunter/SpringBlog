@@ -1,6 +1,9 @@
 package com.codeup.teddyblog.Models;
 
+import org.hibernate.annotations.JoinColumnOrFormula;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -19,17 +22,31 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    public User(String username, String email, String password){
+    @OneToMany
+    @JoinColumn(name="post_id")
+    private List<Post> posts;
+
+    public User(String username, String email, String password, List<Post>posts){
         this.username = username;
         this.email = email;
         this.password = password;
+        this.posts = posts;
     }
 
-    public User(long id, String username, String email, String password){
+    public User(long id, String username, String email, String password, List<Post> posts){
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
+        this.posts = posts;
+    }
+
+    public User(User copy){
+        this.id = copy.id;
+        this.username = copy.username;
+        this.email = copy.email;
+        this.password = copy.password;
+//        this.posts = copy.posts;
     }
 
     public User(){}

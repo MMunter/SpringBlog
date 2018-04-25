@@ -10,14 +10,13 @@
         <h1 class="title">Munter Musings</h1>
 
         <div class="posts" th:each="post : ${posts}">
+
             <h3><span th:text="${post.title}"></span> </h3>
             <p><span th:text="${post.body}"></span> </p>
-            <button>
-                <a th:href="@{/posts/{id}/edit(id=${post.id})}">Edit</a>
-            </button>
-            <button>
-                <a th:href="@{/posts/{id}(id=${post.id})}">View Post</a>
-            </button>
+            <a th:href="@{/posts/{id}(id=${post.id})}">
+                <h3><span th:text="${post.title}"></span></h3>
+                <p><span th:text="${post.body}"></span></p>
+            </a>
 
 
         </div>
