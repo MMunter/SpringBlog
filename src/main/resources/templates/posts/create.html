@@ -7,7 +7,7 @@
     <main class="container">
         <h1>Create Post</h1>
 
-        <form th:action="@{/posts/create}" th:method="post" th:object="${newPost}">
+        <form th:action="@{/posts/create}" th:method="post" th:object="${post}">
             <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" />
             <div class="form-group">
                 <label for="title">Post Title</label>

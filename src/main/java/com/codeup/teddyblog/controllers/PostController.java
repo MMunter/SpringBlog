@@ -58,7 +58,14 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String createPostForm (@Valid Post post, Errors errors, Model model){
+    public String createPostForm (Model model){
+        model.addAttribute("post", new Post());
+        return "posts/create";
+
+    }
+
+    @PostMapping("/posts/create")
+    public String insert(@ModelAttribute Post post, Errors errors, Model model){
         if(errors.hasErrors()) {
             model.addAttribute(post);
             System.out.println("There is an error.");
@@ -71,14 +78,6 @@ public class PostController {
             return "redirect:/posts";
         }
 
-    }
-
-    @PostMapping("/posts/create")
-    public String insert(@ModelAttribute Post newPost){
-        User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        newPost.setUser(loggedInUser);
-        postDao.save(newPost);
-        return "redirect:/posts";
     }
 
     @PostMapping("/posts/delete")
