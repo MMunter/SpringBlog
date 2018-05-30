@@ -20,11 +20,13 @@ public class Post {
 
     //Create relationship to the users table
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
-//    @OneToOne
-//    private PostDetails postDetails;
+    @OneToMany
+    @JoinColumn(name = "comment_id")
+    private List<Comment> comments;
+
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="posts_categories",
@@ -36,17 +38,19 @@ public class Post {
 
     public Post(){}
 
-    public Post(long id, String title, String body, User user){
+    public Post(long id, String title, String body, User user, List<Comment> comments){
         this.id = id;
         this.title = title;
         this.body = body;
         this.user = user;
+        this.comments = comments;
     }
 
-    public Post(String title, String body, User user){
+    public Post(String title, String body, User user, List<Comment> comments){
         this.title = title;
         this.body = body;
         this.user = user;
+        this.comments = comments;
     }
 
     public String getTitle() {

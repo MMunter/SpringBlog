@@ -2,6 +2,7 @@ package com.codeup.teddyblog.controllers;
 
 import com.codeup.teddyblog.Models.Post;
 import com.codeup.teddyblog.Models.User;
+import com.codeup.teddyblog.repositories.CommentRepository;
 import com.codeup.teddyblog.repositories.PostRepository;
 import com.codeup.teddyblog.repositories.UserRepository;
 import com.codeup.teddyblog.services.PostService;
@@ -24,12 +25,14 @@ public class PostController {
     UserService userService;
     PostRepository postDao;
     UserRepository userDao;
+    CommentRepository commentDao;
 
-    public PostController (PostService postService, UserService userService, PostRepository postDao, UserRepository userDao) {
+    public PostController (PostService postService, UserService userService, PostRepository postDao, UserRepository userDao, CommentRepository commentDao) {
        this.postService = postService;
        this.userService = userService;
        this.postDao = postDao;
        this.userDao = userDao;
+       this.commentDao = commentDao;
     }
 
     @GetMapping("/posts")
@@ -43,6 +46,7 @@ public class PostController {
         User user = userService.loggedInUser();
         Post post = postDao.findOne(id);
         model.addAttribute("post", post);
+        model.addAttribute("comments", commentDao.findAllByPostId(id));
         model.addAttribute("isOwnedBy", userService.isOwnedBy(post.getUser()));
         model.addAttribute("isLoggedIn", userService.isLoggedIn());
         return "posts/show";
@@ -72,19 +76,11 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-    public String insert(@ModelAttribute Post post, Errors errors, Model model){
-//        if(errors.hasErrors()) {
-//            model.addAttribute(post);
-//            System.out.println("There is an error.");
-//            return "posts/create";
-//        }
-//        else{
+    public String insert(@ModelAttribute Post post){
             User loggedInUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             post.setUser(loggedInUser);
             postDao.save(post);
             return "redirect:/posts";
-//        }
-
     }
 
     @PostMapping("/posts/delete")
