@@ -15,6 +15,7 @@ body {
     margin-bottom: 60px;
     background: linear-gradient(rgba(141,153,174, .8), rgba(141,153,174, .8)), url("img/kittens.jpeg");
     background-size: cover;
+    font-family: 'Bad Script', cursive;
 }
 
 .footer, .container {
@@ -41,6 +42,16 @@ body {
 
 .posts{
     padding: 40px;
+    text-align: center;
+}
+
+#login-header{
+    padding-top: 100px;
+    text-align: center;
+}
+
+#login{
+    padding-top: 100px;
     text-align: center;
 }
 

@@ -12,11 +12,22 @@
         <p><span th:text="${post.body}"></span> </p>
         <p><span th:text="${'Email: ' + post.user.email}"></span></p>
 
-    <div class="btn-group" th:if="${#authentication.principal.id == post.user.id}">
+    <div class="btn-group" sec:authorize="isAuthenticated()" th:if="${#authentication.principal.id == post.user.id}">
             <a th:href="@{/posts/{id}/edit(id=${post.id})}">
                 <button>Edit</button>
             </a>
 
+    </div>
+
+    <div>
+        <h2>Comments</h2>
+        <a sec:authorize="isAuthenticated()" th:href="@{/posts/{id}/comments/create(id=${post.id})}">
+            <button>Add Comment</button>
+        </a>
+
+        <div class="comment" th:each="comment : ${comments}">
+            <div sec:authorize="isAuthenticated()"><p><a th:href="@{/posts/{id}/comments/{cid}(id=${post.id}, cid=${comment.id})}"><span th:text="${'Author: ' + comment.user.username}"></span></a><br /><span th:text="${comment.body}"></span></p></div>
+        </div>
     </div>
     </main>
 

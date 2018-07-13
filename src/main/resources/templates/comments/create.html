@@ -8,13 +8,12 @@
 
     <h1>Create Post</h1>
 
-    <form th:action="@{/comments/create}" th:method="post" th:object="${comment}">
-        <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" />
-        <div class="form-group">
-            <label for="body">Post Body</label>
+    <form th:action="@{/posts/{id}/comments/create(id=${post.id})}" th:method="post" th:object="${comment}">
+            <input th:type="hidden" type="hidden" th:field="*{post}" />
+            <label for="body">Comment</label>
             <textarea id="body" class="form-control" placeholder="Enter comment." type="text" th:field="*{body}">
                 </textarea>
-        </div>
+
 
         <button class="btn btn-large btn-success">Comment</button>
 

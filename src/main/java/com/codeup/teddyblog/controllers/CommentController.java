@@ -38,14 +38,14 @@ public class CommentController {
         return "comments/show";
     }
 
-    @GetMapping("posts/{id}/comments/create")
+    @GetMapping("/posts/{id}/comments/create")
     public String createComment(@PathVariable long id, Model model){
         model.addAttribute("post", postRepo.findOne(id));
         model.addAttribute("comment", new Comment());
         return "comments/create";
     }
 
-    @PostMapping("posts/{id}/comments/create")
+    @PostMapping("/posts/{id}/comments/create")
     public String insertComment(@PathVariable long id, @ModelAttribute Comment comment){
         User loggedInUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         comment.setPost(postRepo.findById(id));
@@ -54,14 +54,14 @@ public class CommentController {
         return "redirect:/posts/{id}";
     }
 
-    @GetMapping("posts/{id}/comments/{cid}/edit")
+    @GetMapping("/posts/{id}/comments/{cid}/edit")
     public String editComment(@PathVariable long id, @PathVariable long cid, Model model){
         model.addAttribute("post", postRepo.findOne(id));
         model.addAttribute("comment", commentRepo.findOne(cid));
         return "comments/edit";
     }
 
-    @PostMapping("posts/{id}/comments/{cid}/edit")
+    @PostMapping("/posts/{id}/comments/{cid}/edit")
     public String updateComment(@PathVariable long id, @PathVariable long cid, @ModelAttribute Comment comment, Model model){
         User user = userDao.loggedInUser();
         Comment origComment = commentRepo.findOne(cid);
@@ -76,7 +76,7 @@ public class CommentController {
         return "redirect:/posts/{id}";
     }
 
-    @PostMapping("posts/{id}/comments/delete")
+    @PostMapping("/posts/{id}/comments/delete")
     public String deleteComment(@PathVariable long id, @ModelAttribute Comment comment, Model model){
         commentRepo.delete(comment);
         model.addAttribute("post", postRepo.findOne(id));

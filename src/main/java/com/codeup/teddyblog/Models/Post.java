@@ -27,7 +27,6 @@ public class Post {
     @JoinColumn(name = "comment_id")
     private List<Comment> comments;
 
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="posts_categories",
     joinColumns ={@JoinColumn(name="post_id")},
