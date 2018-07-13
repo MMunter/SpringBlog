@@ -35,7 +35,7 @@ public class PostController {
        this.commentDao = commentDao;
     }
 
-    @GetMapping("/posts")
+    @GetMapping("/")
     public String index(Model model){
         model.addAttribute("posts", postDao.findAll());
         return "posts/index";
