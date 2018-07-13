@@ -35,8 +35,8 @@ public class PostController {
        this.commentDao = commentDao;
     }
 
-    @GetMapping("/")
-    public String index(Model model){
+    @GetMapping("/posts")
+    public String showPosts(Model model){
         model.addAttribute("posts", postDao.findAll());
         return "posts/index";
     }
@@ -64,7 +64,7 @@ public class PostController {
         originalPost.setTitle(post.getTitle());
         originalPost.setBody(post.getBody());
         postDao.save(originalPost);
-        return "redirect:/posts";
+        return "redirect:/";
 
     }
 
@@ -80,13 +80,13 @@ public class PostController {
             User loggedInUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             post.setUser(loggedInUser);
             postDao.save(post);
-            return "redirect:/posts";
+            return "redirect:/";
     }
 
     @PostMapping("/posts/delete")
     public String deletePost(@ModelAttribute Post post) {
         postDao.delete(post);
-        return "redirect:/posts";
+        return "redirect:/";
     }
 
 
