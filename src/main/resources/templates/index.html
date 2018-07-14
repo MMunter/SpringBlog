@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="partials/header :: header('Welcome')">
 </head>
 <body>
-    <h1>HELLO!!</h1>
-    <h2>Welcome to my page! It's a work in progress but feel free to my page. Register and start posting!</h2>
+    <div th:replace="partials/navbar :: navbar"></div>
+
+    <main class="container">
+        <h1 class="title">HELLO!!</h1>
+        <h2>Welcome to my page! It's a work in progress but feel free to register and post!</h2>
+    </main>
 
 </body>
 </html>

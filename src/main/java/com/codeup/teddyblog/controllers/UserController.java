@@ -43,6 +43,6 @@ public class UserController {
     @PostMapping("/login")
     public String loginUser() {
         System.out.println("I am logging you in");
-        return "redirect:/posts";
+        return "posts/index";
     }
 }

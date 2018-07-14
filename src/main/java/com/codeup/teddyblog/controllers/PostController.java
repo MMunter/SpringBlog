@@ -35,6 +35,11 @@ public class PostController {
        this.commentDao = commentDao;
     }
 
+    @GetMapping("/")
+    public String welcome(){
+        return "index";
+    }
+
     @GetMapping("/posts")
     public String showPosts(Model model){
         model.addAttribute("posts", postDao.findAll());
@@ -64,7 +69,7 @@ public class PostController {
         originalPost.setTitle(post.getTitle());
         originalPost.setBody(post.getBody());
         postDao.save(originalPost);
-        return "redirect:/";
+        return "redirect:/posts";
 
     }
 
