@@ -81,17 +81,22 @@ public class PostController {
     }
 
     @PostMapping("/posts/create")
-    public String insert(@ModelAttribute Post post){
+    public String insertPost(@Valid Post post, Errors validation, Model model){
+            if (validation.hasErrors()) {
+                model.addAttribute("errors", validation);
+                model.addAttribute("post", post);
+                return "posts/create";
+            }
             User loggedInUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             post.setUser(loggedInUser);
             postDao.save(post);
-            return "redirect:/";
+            return "redirect:/posts";
     }
 
     @PostMapping("/posts/delete")
     public String deletePost(@ModelAttribute Post post) {
         postDao.delete(post);
-        return "redirect:/";
+        return "redirect:/posts";
     }
 
 

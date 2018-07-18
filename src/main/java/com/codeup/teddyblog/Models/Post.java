@@ -1,6 +1,7 @@
 package com.codeup.teddyblog.Models;
 
 import org.hibernate.annotations.ManyToAny;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,10 +13,10 @@ public class Post {
     @GeneratedValue
     private long id;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Post must have title.")
     private String title;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @NotBlank(message = "Body can not be blank.")
     private String body;
 
     //Create relationship to the users table
